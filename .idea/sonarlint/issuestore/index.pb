@@ -9,3 +9,5 @@ L
 contracts/rights-holder.clar,0/0/004a95912626d0dc7cb2f9520a891ab60089e6bb
 G
 contracts/transfer.clar,2/b/2b6d3834c85733faa7dd9de72c5c6ffb4a96d444
+M
+contracts/usage-tracking.clar,e/9/e9b09179d691ec658ec849bf83481dab4134e530

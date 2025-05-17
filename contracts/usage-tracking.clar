@@ -1,30 +1,39 @@
+;; Usage Tracking Contract
+;; Monitors actual water consumption
 
-;; title: usage-tracking
-;; version:
-;; summary:
-;; description:
+(define-data-var admin principal tx-sender)
 
-;; traits
-;;
+;; Map to store water usage (principal -> usage amount)
+(define-map usage principal uint)
 
-;; token definitions
-;;
+;; Error codes
+(define-constant ERR-NOT-AUTHORIZED (err u100))
+(define-constant ERR-INVALID-USAGE (err u104))
 
-;; constants
-;;
+;; Check if caller is admin
+(define-private (is-admin)
+  (is-eq tx-sender (var-get admin)))
 
-;; data vars
-;;
+;; Record water usage
+(define-public (record-usage (holder principal) (amount uint))
+  (begin
+    (asserts! (is-admin) ERR-NOT-AUTHORIZED)
+    (asserts! (> amount u0) ERR-INVALID-USAGE)
+    (let ((current-usage (default-to u0 (map-get? usage holder))))
+      (ok (map-set usage holder (+ current-usage amount))))))
 
-;; data maps
-;;
+;; Get total usage for a rights holder
+(define-read-only (get-usage (holder principal))
+  (default-to u0 (map-get? usage holder)))
 
-;; public functions
-;;
+;; Reset usage for a new period
+(define-public (reset-usage (holder principal))
+  (begin
+    (asserts! (is-admin) ERR-NOT-AUTHORIZED)
+    (ok (map-set usage holder u0))))
 
-;; read only functions
-;;
-
-;; private functions
-;;
-
+;; Transfer admin rights
+(define-public (transfer-admin (new-admin principal))
+  (begin
+    (asserts! (is-admin) ERR-NOT-AUTHORIZED)
+    (ok (var-set admin new-admin))))
