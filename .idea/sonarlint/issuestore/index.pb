@@ -5,3 +5,5 @@ I
 contracts/allocation.clar,d/2/d242892bac79f0e52f6f94f9d8a07d575254f9a8
 R
 "contracts/compliance-contract.clar,9/7/9756dfa38f650b2769d62cb940a44e7789de7e1d
+L
+contracts/rights-holder.clar,0/0/004a95912626d0dc7cb2f9520a891ab60089e6bb
